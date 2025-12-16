@@ -26,7 +26,7 @@ public class User {
 
     @Id
     @UuidGenerator
-    @Column(columnDefinition = "BINARY(16), nullable = false, updatable = false")
+    @Column(columnDefinition = "BINARY(16)", nullable = false, updatable = false)
     @JdbcTypeCode(SqlTypes.BINARY)
     private UUID id;
 
