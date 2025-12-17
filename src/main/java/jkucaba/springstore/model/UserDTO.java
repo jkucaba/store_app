@@ -7,4 +7,5 @@ public record UserDTO (
         UUID id,
         String email,
         Instant createdAt
-){}
+){
+}

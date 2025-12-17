@@ -2,9 +2,11 @@ package jkucaba.springstore.service;
 
 import jkucaba.springstore.entity.Session;
 import jkucaba.springstore.entity.User;
+import jkucaba.springstore.exception.InvalidException;
 import jkucaba.springstore.repository.SessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -32,12 +34,21 @@ public class SessionServiceImpl implements SessionService {
     public User validateSession(UUID sessionId) {
         Session session = sessionRepository.findByIdAndExpiresAtAfter(
                 sessionId, Instant.now()
-        ).orElseThrow(() -> new RuntimeException("Invalid or expired session"));
+        ).orElseThrow(() -> new InvalidException("Invalid or expired session"));
 
         return session.getUser();
     }
 
     @Override
+    public Session validateSessionEntity(UUID sessionId) {
+
+        return sessionRepository.findByIdAndExpiresAtAfter(
+                sessionId, Instant.now()
+        ).orElseThrow(() -> new InvalidException("Invalid or expired session"));
+    }
+
+    @Override
+    @Transactional
     public void deleteExpiredSessions() {
         sessionRepository.deleteByExpiresAtBefore(Instant.now());
     }

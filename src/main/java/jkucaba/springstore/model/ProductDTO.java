@@ -8,4 +8,5 @@ public record ProductDTO(
         String title,
         Integer available,
         BigDecimal price
-) {}
+) {
+}

@@ -12,4 +12,5 @@ public record RegisterUserRequest(
         @NotBlank
         @Size(min=8, max=64)
         String password
-){}
+){
+}

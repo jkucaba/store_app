@@ -1,8 +1,9 @@
 CREATE TABLE cart_items (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id BINARY(16) NOT NULL,
     session_id BINARY(16) NOT NULL,
     product_id BINARY(16) NOT NULL,
     quantity INT NOT NULL,
+    PRIMARY KEY (id),
 
     CONSTRAINT fk_cart_session
         FOREIGN KEY (session_id) REFERENCES sessions(id)

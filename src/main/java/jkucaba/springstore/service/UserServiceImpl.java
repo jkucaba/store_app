@@ -2,7 +2,8 @@ package jkucaba.springstore.service;
 
 import jkucaba.springstore.entity.Session;
 import jkucaba.springstore.entity.User;
-import jkucaba.springstore.exception.EmailAlreadyExistsException;
+import jkucaba.springstore.exception.ConflictException;
+import jkucaba.springstore.exception.InvalidException;
 import jkucaba.springstore.mapper.UserMapper;
 import jkucaba.springstore.model.LoginRequest;
 import jkucaba.springstore.model.LoginResponse;
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO registerUser(RegisterUserRequest request) {
 
         if(userRepository.existsByEmail(request.email())){
-            throw new EmailAlreadyExistsException(request.email());
+            throw new ConflictException("User with email " + request.email() + " already exists");
         }
 
         User user = userMapper.registerUserToUser(request);
@@ -42,10 +43,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
         User user = userRepository.findByEmail(loginRequest.email())
-                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
+                .orElseThrow(() -> new InvalidException("Invalid credentials"));
 
         if (!passwordEncoder.matches(loginRequest.password(), user.getPasswordHash())) {
-            throw new RuntimeException("Invalid credentials");
+            throw new InvalidException("Invalid credentials");
         }
 
         Session session = sessionService.createSession(user);

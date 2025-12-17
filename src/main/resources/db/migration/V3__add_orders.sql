@@ -11,11 +11,12 @@ CREATE TABLE orders (
 );
 
 CREATE TABLE order_items (
-     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+     id BINARY(16) NOT NULL,
      order_id BINARY(16) NOT NULL,
      product_id BINARY(16) NOT NULL,
      quantity INT NOT NULL,
      price_at_purchase DECIMAL(10,2) NOT NULL,
+     PRIMARY KEY (id),
 
      CONSTRAINT fk_order_items_order
          FOREIGN KEY (order_id) REFERENCES orders(id)
