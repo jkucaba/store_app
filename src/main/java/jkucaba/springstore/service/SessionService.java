@@ -14,5 +14,4 @@ public interface SessionService {
     Session validateSessionEntity(UUID sessionId);
 
     void deleteExpiredSessions();
-
 }

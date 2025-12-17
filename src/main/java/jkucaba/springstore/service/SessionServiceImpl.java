@@ -3,6 +3,7 @@ package jkucaba.springstore.service;
 import jkucaba.springstore.entity.Session;
 import jkucaba.springstore.entity.User;
 import jkucaba.springstore.exception.InvalidException;
+import jkucaba.springstore.exception.NotFoundException;
 import jkucaba.springstore.repository.SessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

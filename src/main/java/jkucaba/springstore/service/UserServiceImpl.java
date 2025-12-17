@@ -4,6 +4,7 @@ import jkucaba.springstore.entity.Session;
 import jkucaba.springstore.entity.User;
 import jkucaba.springstore.exception.ConflictException;
 import jkucaba.springstore.exception.InvalidException;
+import jkucaba.springstore.exception.NotFoundException;
 import jkucaba.springstore.mapper.UserMapper;
 import jkucaba.springstore.model.LoginRequest;
 import jkucaba.springstore.model.LoginResponse;
@@ -14,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -52,5 +55,10 @@ public class UserServiceImpl implements UserService {
         Session session = sessionService.createSession(user);
 
         return new LoginResponse(session.getId());
+    }
+
+    @Override
+    public User getUserById(UUID userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));
     }
 }
