@@ -1,6 +1,7 @@
 package jkucaba.springstore.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -31,6 +32,7 @@ public class User {
     private UUID id;
 
     @NotNull
+    @Email
     @Column(nullable = false)
     private String email;
 
